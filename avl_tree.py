@@ -69,3 +69,25 @@ class AvlTree:
     node.right = self.rotate_with_left_child(node.right)
     # double rotate to the left
     return self.rotate_with_right_child(node)
+  def find(self, node):
+    """Find a key"""
+    return self.find(node, self.root)
+  def find(self, node, root):
+    """Find for real"""
+    while root:
+      if node.key == root.key:
+        return root
+      if node.key > root.key:
+        root = root.right
+      else:
+        root = root.left
+    return root
+  def remove(self, node):
+    """Remove node"""
+    self.root = self.remove(node, self.root)
+  def remove(self, node, root):
+    """Remove a node for real and give back root"""
+    # if remove from left, check if smaller by 2
+    # if yes do rotations
+    # if remove from right, check if smaller by 2
+    # if yes do rotations
