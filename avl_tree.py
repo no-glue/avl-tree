@@ -1,17 +1,17 @@
-class AvlTree:
+class AvlTree(object):
   def __init__(self, root = None):
     """Initialize the tree, at first root is empty"""
     self.root = root
   def insert(self, node):
     """Insert a node"""
-    self.root = self.insert(node, self.root)
-  def insert(self, node, root):
+    self.root = self._insert(node, self.root)
+  def _insert(self, node, root):
     """Insert a node for real and give back root"""
     if not root:
       root = node
     elif node.key < root.key:
-      root.left = self.insert(node, root.left)
-      if root.left.height - root.right.height == 2:
+      root.left = self._insert(node, root.left)
+      if root.right and (root.left.height - root.right.height == 2):
         # Inserted node on the left side, check if left side is larger by 2
         # this is not allowed
         # at most 1 difference
@@ -21,8 +21,8 @@ class AvlTree:
           root = self.double_with_left_child(root)
           # It's in wrong position, put it on the right
     elif node.key > root.key:
-      root.right = self.insert(node, root.right)
-      if root.right.height - root.left.height == 2:
+      root.right = self._insert(node, root.right)
+      if root.left and (root.right.height - root.left.height == 2):
         # Inserted node on the right side, check if right side larger by 2
         # not allowed
         # max 1 difference
@@ -31,10 +31,8 @@ class AvlTree:
         else:
           root = self.double_with_right_child(root)
           # It's in wrong position, put it on the left
-    else:
-      # Duplicate happened, do nothing
 
-    root.height = max(root.left.height, root.right.height) + 1
+    root.height = max(root.left.height if root.left else -1, root.right.height if root.right else -1) + 1
     # get root height, left or right subtree height + 1, depending which is greater
     return root
   def rotate_with_left_child(self, node):
@@ -71,8 +69,8 @@ class AvlTree:
     return self.rotate_with_right_child(node)
   def find(self, node):
     """Find a key"""
-    return self.find(node, self.root)
-  def find(self, node, root):
+    return self._find(node, self.root)
+  def _find(self, node, root):
     """Find for real"""
     while root:
       if node.key == root.key:
