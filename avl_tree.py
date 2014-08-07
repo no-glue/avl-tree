@@ -85,6 +85,23 @@ class AvlTree(object):
     self.root = self.remove(node, self.root)
   def remove(self, node, root):
     """Remove a node for real and give back root"""
+    if not root:
+      return root
+      # key is not found, do nothing
+    if node.key < root.key:
+      root.left = self._remove(node, root.left)
+      # removed element from tree, rebalance it
+      if root.right and root.right.height - root.left.height == 2:
+        # tree is unbalanced, balance it
+        if right_heigh >= left_height:
+          rotate_with_left_child
+        else:
+          double_with_right_child
+    elif node.key > root.key:
+      root.right = self._remove(node, root.right)
+      # removed element from tree, rebalance it
+      if root.left and root.left.height - root.right.height == 2:
+        # tree is unbalanced, balance it
     # if remove from left, check if smaller by 2
     # if yes do rotations
     # if remove from right, check if smaller by 2
