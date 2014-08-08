@@ -2,9 +2,9 @@ class AvlTree(object):
   def __init__(self, root = None):
     """Initialize the tree, at first root is empty"""
     self.root = root
-  def insert(self, node):
+  def insert(self, node, root = None):
     """Insert a node"""
-    self.root = self._insert(node, self.root)
+    self.root = self._insert(node, root if root else self.root)
   def _insert(self, node, root):
     """Insert a node for real and give back root"""
     if not root:
@@ -67,9 +67,9 @@ class AvlTree(object):
     node.right = self.rotate_with_left_child(node.right)
     # double rotate to the left
     return self.rotate_with_right_child(node)
-  def find(self, node):
+  def find(self, node, root = None):
     """Find a key"""
-    return self._find(node, self.root)
+    return self._find(node, root if root else self.root)
   def _find(self, node, root):
     """Find for real"""
     while root:
