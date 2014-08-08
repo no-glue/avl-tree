@@ -1,5 +1,5 @@
 class AvlNode(object):
-  def __init__(self, key, value, height = 0, left = None, right = None):
+  def __init__(self, key = "", value = [], height = 0, left = None, right = None):
     """Set key and value for the node"""
     self._key = key
     self._value = value
@@ -46,6 +46,9 @@ class AvlNode(object):
   def right(self, value):
     """Set right"""
     self._right = value
+  def spawn(self):
+    """Spawn a node"""
+    return AvlNode()
   def __str__(self):
     """Show self as string"""
     return "key: " + self.key + "; value: " + self.value + "; height: " + str(self.height)
