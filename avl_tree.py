@@ -31,6 +31,8 @@ class AvlTree(object):
         else:
           root = self.double_with_right_child(root)
           # It's in wrong position, put it on the left
+    else:
+      root.value.extend(node.value)
 
     root.height = max(root.left.height if root.left else -1, root.right.height if root.right else -1) + 1
     # get root height, left or right subtree height + 1, depending which is greater
