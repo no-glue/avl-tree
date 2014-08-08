@@ -13,4 +13,10 @@ if __name__ == "__main__":
   keys.insert(AvlNode("country", "croatia"))
   keys.insert(AvlNode("favorites", ["icecream", "chocolate", "coffee", "wine"]))
 
+  print str(keys.find(AvlNode("country", "")).value)
+
+  keys.remove(AvlNode("country", ""))
+
+  print str(keys.find(AvlNode("country", "")))
+
   print str(keys.find(AvlNode("favorites", "")).value)

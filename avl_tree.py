@@ -80,10 +80,10 @@ class AvlTree(object):
       else:
         root = root.left
     return root
-  def remove(self, node):
+  def remove(self, node, root = None):
     """Remove node"""
-    self.root = self.remove(node, self.root)
-  def remove(self, node, root):
+    self.root = self._remove(node, root if root else self.root)
+  def _remove(self, node, root):
     """Remove a node for real and give back root"""
     if not root:
       return root
@@ -93,16 +93,48 @@ class AvlTree(object):
       # removed element from tree, rebalance it
       if root.right and root.right.height - root.left.height == 2:
         # tree is unbalanced, balance it
-        if right_heigh >= left_height:
-          rotate_with_left_child
+        right_height = root.right.right.height if root.right.right else 0
+        left_height = root.right.left.height if root.right.left else 0
+        if right_height >= left_height:
+          root = self.rotate_with_left_child(root)
         else:
-          double_with_right_child
+          root = self.double_with_right_child(root)
     elif node.key > root.key:
       root.right = self._remove(node, root.right)
       # removed element from tree, rebalance it
       if root.left and root.left.height - root.right.height == 2:
         # tree is unbalanced, balance it
-    # if remove from left, check if smaller by 2
-    # if yes do rotations
-    # if remove from right, check if smaller by 2
-    # if yes do rotations
+        right_height = root.left.right.height if root.left.right else 0
+        left_height = root.left.left.height if root.left.left else 0
+        if left_height >= right_height:
+          root = self.rotate_with_right_child(root)
+        else:
+          root = self.double_with_left_child(root)
+    elif root.left:
+      # node to be removed, pick largest one and move it to root
+      max_node = self._find_max(root.left) # todo
+      root.key = max_node.key
+      root.value = max_node.value
+      self._remove(max_node, root.left)
+      # removed from left side, rebalance
+      if root.right and root.right.height - root.left.height == 2:
+        # tree in unbalanced, balance it
+        right_height = root.right.right.height if root.right.right else 0
+        left_height = root.right.left.height if root.right.left else 0
+        if right_height >= left_height:
+          root = self.rotate_with_left_child(root)
+        else:
+          root = self.double_with_right_child(root)
+    else:
+      root = root.left if root.left else root.right
+    if root:
+      root.height = max(root.left.height if root.left else -1, root.right.height if root.right else -1) + 1
+    return root
+  def find_max(self, root = None):
+    """Find largest node in tree"""
+    return self._find_max(root if root else self.root)
+  def _find_max(self, root):
+    """Find largest node in tree"""
+    while root.right:
+      root = root.right
+    return root
