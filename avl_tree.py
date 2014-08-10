@@ -138,3 +138,12 @@ class AvlTree(object):
     while root.right:
       root = root.right
     return root
+  def print_tree(self, root = None, direction = None):
+    """Prints tree"""
+    self._print_tree(self.root if not root else root, "" if not direction else direction)
+  def _print_tree(self, root, direction):
+    """Prints tree"""
+    if root:
+      self._print_tree(root.left, "l")
+      print direction + " " + str(root)
+      self._print_tree(root.right, "r")
