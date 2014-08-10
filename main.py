@@ -6,4 +6,3 @@ if __name__ == "__main__":
   keys.insert(AvlNode("favorites", ["icecream", "chocolate", "coffee", "wine"]))
   print str(keys.find(AvlNode("favorites", "")).value)
   keys.insert(AvlNode("favorites", ["sugar"]))
-  print str(keys.find(AvlNode("favorites", "")).value)

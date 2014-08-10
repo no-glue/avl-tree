@@ -51,4 +51,4 @@ class AvlNode(object):
     return AvlNode()
   def __str__(self):
     """Show self as string"""
-    return "key: " + self.key + "; value: " + self.value + "; height: " + str(self.height)
+    return "key: " + str(self.key) + "; value: " + str(self.value) + "; height: " + str(self.height)
